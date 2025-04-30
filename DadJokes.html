@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="dadJokes.css">
+    <title>Dad Jokes</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Dad Jokes</h1>
+        <section id="api_body">Click the button to get a joke!</section>
+        <button id="fetchJokes">Get another Joke</button>
+    </div>
+
+    <script>
+        const dadJokesBody = document.getElementById('api_body');
+        const api = 'https://icanhazdadjoke.com/';
+
+        // Fetch Dad Joke
+        const fetchData = async () => {
+            try{
+    
+                const res = await fetch(api, {
+                    headers: {
+                        Accept: 'application/json',
+                    },
+                });
+                const data = await res.json();
+                dadJokesBody.innerHTML = data.joke;
+            } 
+            catch (error) {
+                console.error('Error fetching the joke:', error);
+                dadJokesBody.innerHTML = 'Oops! Something went wrong.';
+            }
+        }
+
+        // Fetch the first joke on page load
+        fetchData();
+
+        // Fetch a new joke when the button is clicked
+        document.getElementById('fetchJokes').addEventListener('click', fetchData);
+    </script>
+</body>
+</html>
